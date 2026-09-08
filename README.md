@@ -63,7 +63,8 @@ All three servers communicate over a private WireGuard VPN mesh. No service is e
 
 | Site | Role |
 |------|------|
-| [turquoiseufo.net](https://turquoiseufo.net) | Primary organism publishing site |
+| [turquoiseufo.org](https://turquoiseufo.org) | Home of the organism — Nathan Arizona LLC / Turquoise UFO |
+| [turquoiseufo.net](https://turquoiseufo.net) | Turquoise UFO private desert tours (business site) |
 | [talkingtree.org](https://talkingtree.org) | Nature and ecology content |
 | [westdesertjournal.com](https://westdesertjournal.com) | Southwest regional news |
 
