@@ -1,12 +1,27 @@
 # Self-Hosted AI Infrastructure
 
-Three Linux servers running containerized AI agents, automation workflows, vector memory, and live publishing properties — connected by a private WireGuard VPN mesh.
+Self-hosted Linux infrastructure — multiple servers, a Mac workstation, and a portable field node — running containerized services, native ACP agent runtimes, automation workflows, vector memory, and live publishing properties, connected by a private WireGuard VPN mesh.
 
 Built and operated by [Nathan Cowlishaw](https://www.linkedin.com/in/nateaz/) · Infrastructure started May 2026
 
 ---
 
-## Architecture Overview
+## Current snapshot — September 2026
+
+What changed since the June 2026 baseline documented below:
+
+- **Agent layer.** Roughly twenty named agent seats across Claude Code, Codex CLI, Cursor, Gemini CLI, Grok CLI, Prime Agent, and self-hosted open-source runtimes, orchestrated from desktop and mobile over the Agent Client Protocol (ACP) via Paseo. Most service workloads run under Docker Compose; ACP agent runtimes stay native where upstream requires.
+- **Isolation rule.** One seat, one git worktree, one credential boundary — adopted after a vendor IDE auto-committed another seat's files into a shared checkout.
+- **Automation.** n8n retired (July 2026) in favor of Windmill: dual-run period, then per-caller scoped-token authentication before the legacy path was closed.
+- **Continuity.** The repository is canonical memory. A wake/close protocol lets any agent, on any runtime, cold-start from repository state; 100+ ratified operating decisions live in a version-controlled ledger.
+- **Recovery.** Designed around rebuilding from documented bootstrap procedures, preserved state, and fresh authentication ceremonies rather than relying on disk images. A portable field node joined the fleet in September.
+- **Edge.** Cloudflare Tunnels and Access (JWT service auth) in front of the reverse proxies.
+
+*This public repository is a sanitized overview. Hostnames, addresses, credentials, seat rosters, and internal governance records live in the private operating repository and are not published here.*
+
+---
+
+## Architecture Overview (June 2026 baseline)
 
 ```
 ┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
@@ -36,7 +51,7 @@ All three servers communicate over a private WireGuard VPN mesh. No service is e
 | Reverse Proxy | nginx | TLS termination, routing |
 | Local LLM | Ollama | On-premise model inference |
 | Vector DB | Qdrant | Agent memory, semantic search |
-| Automation | n8n | Workflow orchestration, webhooks |
+| Automation | Windmill (n8n retired July 2026) | Workflow orchestration, webhooks, scoped-token auth |
 | Publishing | WordPress (×3) | Live content properties |
 | Publishing | Ghost | Long-form publishing |
 | Publishing | Postiz | Social scheduling |
@@ -93,7 +108,9 @@ self-hosted-ai-infrastructure/
 | Publishing Server | Live |
 | Hub Server | Live |
 | Qdrant | Live |
-| n8n | Live |
+| Windmill | Live |
+| n8n | Retired (July 2026) |
+| ACP agent runtimes (Paseo) | Live |
 | Ollama | Live |
 | WordPress (×3) | Live |
 | Ghost | Live |
@@ -105,6 +122,6 @@ self-hosted-ai-infrastructure/
 
 This infrastructure supports a portfolio of AI agent systems, publishing properties, and automation workflows operated independently without managed cloud services or a team.
 
-The stack is self-hosted on dedicated Linux servers. All services run in Docker containers. The WireGuard mesh connects them into a single private network. GitHub is the system of record for all configuration, decisions, and documentation.
+The stack is self-hosted on dedicated Linux servers plus a Mac workstation and a portable field node. Most service workloads run in Docker containers; ACP agent runtimes stay native where upstream requires. The WireGuard mesh connects them into a single private network. GitHub is the system of record for all configuration, decisions, and documentation.
 
 **Connect:** [LinkedIn](https://www.linkedin.com/in/nateaz/) · [GitHub](https://github.com/natearizona)
